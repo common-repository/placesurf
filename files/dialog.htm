@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{#placesurf_dlg.title}</title>
+	<script type="text/javascript" src="../../../../wp-includes/js/tinymce/tiny_mce_popup.js?ver=327-1236"></script>
+  <script type="text/javascript" src="../../../../wp-includes/js/jquery/jquery.js"></script>
+
+	<script type="text/javascript" src="js/plugin.js?ver=327-1236"></script>
+	<script type="text/javascript" src="http://placesurf.com/js/functions.js?ver=327-1236"></script>
+
+	<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript" ></script>
+
+	<link   type="text/css"       href="css/content.css?ver=327-1236" rel="stylesheet" />
+
+</head>
+<body onload='body_onload();' style='display:none;' >
+
+		<div id="general_panel" class="panel current">
+			<table id=pstable >
+			<tr>
+			<td valign=top  >
+
+							<a href='http://placesurf.com/' target=_blank>
+								<img src='img/header.png' style='border-style:none;border-width:0px;'>
+								</a>
+							<OL style='padding-left:15px;text-align:left;'  >
+	                <LI>{#placesurf_dlg.instructions1}
+
+	                <LI>{#placesurf_dlg.instructions2}
+
+	                <LI>{#placesurf_dlg.instructions3}
+
+	                <LI>{#placesurf_dlg.instructions4}
+
+	                <LI>{#placesurf_dlg.instructions5}
+	            </OL>
+
+								<div class=spacer ></div>
+
+                <fieldset style='float:left;' >
+                    <legend><b>{#placesurf_dlg.latitude}:</b></legend>
+                    <input id=latitude name=latitude type=text class=psinput value='' style='width:100px' tabindex=1 onkeydown='input_onkeydown(this);'   class='user_input' >
+                </fieldset>
+
+                <fieldset style='float:left;' >
+                <legend><b>{#placesurf_dlg.longitude}:</b></legend>
+                <input id=longitude name=longitude type=text class=psinput  value=''  style='width:100px'  tabindex=2 class='user_input'  onkeydown='input_onkeydown(this);'   >
+                </fieldset>
+
+                <fieldset style='float:left;' >
+                <legend>&nbsp;</legend>
+                <input type=button id=butclear value='  {#placesurf_dlg.clearfields}  ' onclick='placesurf_clearfields();'
+                onMouseOver="style.cursor='pointer';"
+                style='width:80px;font-size:12px;margin-left:10px;float:left;font-weight:bold;' >
+              </fieldset>
+
+							<div style="clear:both;" class=spacer ></div>
+
+              <fieldset>
+                   <legend><b>{#placesurf_dlg.placename}:</b></legend>
+                       <input id=placename name=placename type=text class=psinput value='' style='width:100%'   maxlength=150  tabindex=3  class='user_input'  onkeydown='input_onkeydown(this);' >
+               </fieldset>
+
+							<div class=spacer ></div>
+
+               <fieldset>
+                   <legend><b>{#placesurf_dlg.briefdescription}:</b></legend>
+                          <textarea rows="5" id="description"  class=psinput wrap="on" style="width:100%;height:80px;"  tabindex=4  class='user_input'
+                      onkeyup="textCounter();"
+                  onKeyDown="textCounter()" ></textarea>
+                       <span style='float:right;'>{#placesurf_dlg.char_remaining}: <input readonly type="text"  class=psinput id="len_description" size="3" maxlength="3" value="250">
+                       	 {#placesurf_dlg.max_char}
+              </fieldset>
+
+              <div class=spacer ></div>
+              <p>&nbsp;</p>
+              <span style='font-size:12px;' >
+              {#placesurf_dlg.gotoplacesurf}
+            </span>
+
+				</td><td valign=top>
+
+	            <div style='text-align:left;padding:0px;margin:0px;' >
+			            <input id=searchtext type="textbox" class=psinput style="padding-left:5px;width:230px;border-width:1px;margin-right:10px;" value="" onkeydown="key_down(event);" >
+			            <input id=butsearchmapclear type="button"  style="font-size:12px;font-weight:bold;" value=" {#placesurf_dlg.searchmapclear} " onclick="placesurf_searchmapclear()"   >
+			            <input id=butsearchmap type="button"  style="font-size:12px;font-weight:bold;" value=" {#placesurf_dlg.searchmap} " onclick="placesurf_searchmap()" >
+	            </div>
+
+	            <div id="placesurf_map" style="width:450px;height:400px;margin-top:15px;margin-bottom:5px;border-width:1px;border-style:solid;"  ></div>
+	            <table style='width:100%;' id=latlngselect >
+            	<tr><td align=left >
+            		<span id=declatlng></span>
+            	</td>
+            	<td>&nbsp;</td>
+            	<td align=right >
+            		 <span id=dmslatlng></span>
+            	</td>
+							</tr>
+
+            </table>
+					<div style='padding-top:10px'>
+						{#placesurf_dlg.mapinstructions}
+				</div>
+
+			</td>
+</tr>
+
+<tr>
+<td valign=top colspan=2>
+
+			         <div style="clear:both;"></div>
+
+		<div class="mceActionPanel">
+
+						<div style="float: left">
+							<input type="button" id="cancel" name="cancel" value="{#cancel}" onclick="tinyMCEPopup.close();" />
+						</div>
+
+						<div style="float: right">
+									<input type="button" id="insert" name="insert" value="{#placesurf_dlg.testlink}"  onclick='placesurf_testlink();'/>
+									 &nbsp;
+									<input type="button" id="insert" name="insert" value="{#insert}" onclick='placesurf_insertlink();' />
+						</div>
+
+		</div>
+</td>
+</tr>
+</table>
+
+</body>
+</html>
